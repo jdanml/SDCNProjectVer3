@@ -202,37 +202,43 @@ public class Main {
                         continue;
                     }
 
-                    System.out.print(">>> Enter name (String) = ");
-                    name = sc.next();
-
-                    System.out.print(">>> Enter balance (int) = ");
-                    if (sc.hasNextInt()) {
-                        balance = sc.nextInt();
-                    } else {
-                        System.out.println("The provided text is not an integer");
-                        sc.next();
-                        continue;
-                    }
-
-                    path = "/Update";
-                    data = "UPDATE BANK SET NAME='" + name + "', "
-                            + "BALANCE=" + Integer.toString(balance)
-                            + " WHERE ID=" + Integer.toString(accNumber);
-
-                    r = clientZk.setZNodeData(path, data.getBytes());
-
                     pathr = "/BankAcc" + "/" + Integer.toString(accNumber);
-                    datar = name + "," + Integer.toString(balance);
 
-                    if (datar != "") {
-                        r = clientZk.setZNodeData(pathr, datar.getBytes());
-                    }
-                    if (r) {
-                        System.out.println("result command> The following account has been updated : '" + Integer.toString(accNumber) + ", " + name + ", " + Integer.toString(balance) + "'");
+                    if (pathr != "" && pathr.substring(0, 1).equals("/") && clientZk.exists(pathr)) {
+                        System.out.print(">>> Enter name (String) = ");
+                        name = sc.next();
+
+                        System.out.print(">>> Enter balance (int) = ");
+                        if (sc.hasNextInt()) {
+                            balance = sc.nextInt();
+                        } else {
+                            System.out.println("The provided text is not an integer");
+                            sc.next();
+                        }
+
+                        path = "/Update";
+                        data = "UPDATE BANK SET NAME='" + name + "', "
+                                + "BALANCE=" + Integer.toString(balance)
+                                + " WHERE ID=" + Integer.toString(accNumber);
+
+                        r = clientZk.setZNodeData(path, data.getBytes());
+
+                        datar = name + "," + Integer.toString(balance);
+
+                        if (datar != "") {
+                            rr = clientZk.setZNodeData(pathr, datar.getBytes());
+
+                            if (r && rr) {
+                                System.out.println("result command> The following account has been updated: '" + Integer.toString(accNumber) + "," + data + "'");
+                            } else {
+                                System.err.println("result command> Error updating account '" + Integer.toString(accNumber) + "' or account doesn't exist");
+                            }
+                        } else {
+                            System.err.println("result command> Error updating account");
+                        }
                     } else {
-                        System.err.println("result command> Error updating account");
+                        System.err.println("result command> Account doesn't exist");
                     }
-
                     break;
 
                 case "delete":
@@ -256,17 +262,17 @@ public class Main {
                     pathr = "/BankAcc" + "/" + Integer.toString(accNumber);
                     if (pathr != "" && pathr.substring(0, 1).equals("/") && clientZk.exists(pathr)) {
                         // Eliminación de un Znode
-                        r = clientZk.deleteZNode(pathr);
+                        rr = clientZk.deleteZNode(pathr);
                     }
-                        if (r) {
-                            System.out.println("result command> The following account has been deleted : " + Integer.toString(accNumber));
-                        } else {
-                            System.err.println("result command> Error deleting account");
-                        }
+                    if (r && rr) {
+                        System.out.println("result command> The following account has been deleted : " + Integer.toString(accNumber));
+                    } else {
+                        System.err.println("result command> Error deleting account");
+                    }
 
-                        break;
+                    break;
 
-        case "bankdb":
+                case "bankdb":
                     path = "/List";
                     // mostrar la lsita de nodos con sus datos
                     data = "SELECT ID FROM BANK";
@@ -299,8 +305,6 @@ public class Main {
             }
         }
     }
-
-    
 
     private static String displayList(List<String> ls) {
         String aff = "[";
