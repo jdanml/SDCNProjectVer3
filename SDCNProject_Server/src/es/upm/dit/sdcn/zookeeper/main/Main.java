@@ -1,8 +1,5 @@
 package es.upm.dit.sdcn.zookeeper.main;
 
-import es.upm.dit.cnvr.lab1.zkMember;
-import static es.upm.dit.cnvr.labzookeeper.SyncPrimitive.barrierTest;
-import static es.upm.dit.cnvr.labzookeeper.SyncPrimitive.queueTest;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -19,21 +16,21 @@ public class Main {
 
     private static IClientZk clientZk;
     private static String hostport;
-    
+
     public static void main(String[] args) throws Exception, IOException, InterruptedException {
 
-        zkMember zk = new zkMember();
-
-        if (args[0].equals("qTest")) {
-            queueTest(args);
-        } else {
-            barrierTest(args);
+        if (args.length > 1) {
+            System.err.println("Just 1 argument [host:port]");
+            System.exit(2);
         }
-
         // terminal
 
         // 
+        if (args.length == 0) {
             hostport = "localhost:2181";
+        } else {
+            hostport = args[0];
+        }
 
         clientZk = new ClientZk(hostport);
 
