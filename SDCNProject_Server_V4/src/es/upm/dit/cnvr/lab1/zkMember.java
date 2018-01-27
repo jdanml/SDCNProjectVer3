@@ -113,13 +113,4 @@ public class zkMember implements Watcher{
 
 	}
 	
-	//public static void main(String[] args) {
-		//zkMember zk = new zkMember();
-		
-		//try {
-			//Thread.sleep(300000); 			
-		//} catch (Exception e) {
-			// TODO: handle exception
-		//}
-	//}
 }

@@ -1,4 +1,4 @@
-package es.upm.dit.cnvr.labzookeeper;
+package es.upm.dit.cnvr.lab1;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -227,14 +227,6 @@ public class SyncPrimitive implements Watcher {
             }
         }
     }
-
-    //public static void main(String args[]) {
-        //if (args[0].equals("qTest"))
-            //queueTest(args);
-        //else
-            //barrierTest(args);
-
-    //}
 
     public static void queueTest(String args[]) {
         Queue q = new Queue(args[1], "/app1");

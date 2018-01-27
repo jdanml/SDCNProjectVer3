@@ -1,8 +1,8 @@
 package es.upm.dit.sdcn.zookeeper.main;
 
+import static es.upm.dit.cnvr.lab1.SyncPrimitive.barrierTest;
+import static es.upm.dit.cnvr.lab1.SyncPrimitive.queueTest;
 import es.upm.dit.cnvr.lab1.zkMember;
-import static es.upm.dit.cnvr.labzookeeper.SyncPrimitive.barrierTest;
-import static es.upm.dit.cnvr.labzookeeper.SyncPrimitive.queueTest;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
