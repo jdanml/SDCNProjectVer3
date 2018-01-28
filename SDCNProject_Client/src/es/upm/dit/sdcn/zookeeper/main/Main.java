@@ -229,7 +229,7 @@ public class Main {
                             rr = clientZk.setZNodeData(pathr, datar.getBytes());
 
                             if (r && rr) {
-                                System.out.println("result command> The following account has been updated: '" + Integer.toString(accNumber) + "," + data + "'");
+                                System.out.println("result command> The following account has been updated : '" + Integer.toString(accNumber) + ", " + name + ", " + Integer.toString(balance) +"'");
                             } else {
                                 System.err.println("result command> Error updating account '" + Integer.toString(accNumber) + "' or account doesn't exist");
                             }
